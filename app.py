@@ -5,6 +5,8 @@ The dashboard only DISPLAYS results that were produced in the notebook (Section 
 plus sri_lanka_districts.geojson (district boundaries, used for the map).
 It does not train any model.
 """
+import utils.transport
+import utils.session
 import json
 from pathlib import Path
 
