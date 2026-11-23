@@ -1014,65 +1014,6 @@ def page_all_models():
     best_by_band = mat.idxmin()
     st.markdown("**Best model in each group:** " + " · ".join(f"{b}: **{best_by_band[b]}**" for b in BAND_LABELS))
 
-
-# ================================================================== PAGE: FEATURE IMPORTANCE
-def page_feature_importance():
-    st.title("Which features matter?")
-    fi = load_optional("feature_importance.csv")
-    if fi is None:
-        st.info("Add `feature_importance.csv` (exported by the last notebook cell) to the repository to see this page.")
-        return
-    fi["Group"] = fi["Feature"].map(GROUP_OF).fillna("Other")
-    models = [m for m in MODELS if m in set(fi["Model"])]
-    st.caption("Each model's own importance measure, scaled so that the features of a model add up to 100%. "
-               "Compare the patterns between models rather than the exact numbers. ARIMA and Naive have no feature "
-               "importance: ARIMA uses only a district's own past cases and Naive copies this week's cases.")
-
-    a, b = st.columns([1, 2])
-    with a:
-        m = st.selectbox("Model", models, index=models.index("Random Forest") if "Random Forest" in models else 0)
-        n = st.slider("Number of features to show", 5, 25, 12)
-    sub = fi[fi["Model"] == m].sort_values("Importance", ascending=False).head(n)
-    with b:
-        fig = px.bar(sub.sort_values("Importance"), x="Importance", y="Feature", orientation="h", color="Group",
-                     color_discrete_map=GROUP_COLORS, text="Importance")
-        fig.update_traces(texttemplate="%{text:.1f}%")
-        fig.update_layout(title=f"{m}: top {n} features", xaxis_title="Importance (%)", yaxis_title="",
-                          legend=dict(orientation="h", y=-0.15))
-        st.plotly_chart(style(fig, 120 + 28 * n), width="stretch")
-    top = sub.iloc[0]
-    case_share = fi[(fi["Model"] == m) & (fi["Group"] == "Case history")]["Importance"].sum()
-    st.markdown(f"**{m}:** the most important feature is **{top['Feature']}** ({top['Importance']:.1f}%), and the "
-                f"case-history features together account for **{case_share:.0f}%** of the importance.")
-
-    st.subheader("All models together")
-    mat = fi.pivot_table(index="Feature", columns="Model", values="Importance", aggfunc="sum").reindex(columns=models)
-    mat = mat.loc[mat.mean(axis=1).sort_values(ascending=False).index]
-    fig = px.imshow(mat, text_auto=".0f", aspect="auto", color_continuous_scale="Blues",
-                    labels=dict(color="Importance %"))
-    fig.update_layout(title="Importance (%) of every feature in every model")
-    st.plotly_chart(style(fig, 150 + 24 * len(mat)), width="stretch")
-
-    st.subheader("By type of information")
-    grp = fi.groupby(["Model", "Group"])["Importance"].sum().reset_index()
-    fig = px.bar(grp, x="Importance", y="Model", color="Group", orientation="h", color_discrete_map=GROUP_COLORS,
-                 category_orders={"Model": models})
-    fig.update_layout(barmode="stack", xaxis_title="Share of importance (%)", yaxis_title="",
-                      title="How much each model relies on each kind of feature")
-    st.plotly_chart(style(fig, 120 + 45 * len(models)), width="stretch")
-
-    case = grp[grp["Group"] == "Case history"].set_index("Model")["Importance"]
-    weather = grp[grp["Group"].isin(["Current weather", "Rainfall history", "Temperature history"])].groupby("Model")["Importance"].sum()
-    st.markdown(f"**Reading the chart:** case history makes up {case.min():.0f}% to {case.max():.0f}% of the importance "
-                f"across the models, while all weather features together make up {weather.min():.0f}% to "
-                f"{weather.max():.0f}%. The models mostly look at how many cases there were recently, which fits the "
-                "strong week-to-week persistence of dengue.")
-    st.caption("Importance shows what a model uses, not what causes dengue. Features that carry similar information "
-               "(for example this week's and last week's cases) share the credit, and the weather lags may matter "
-               "more than their score suggests because they are correlated with the case history. A model without "
-               "weather was not tested.")
-
-
 # ================================================================== PAGE: HYBRID
 def page_hybrid():
     st.title("Hybrid model: ARIMA + Random Forest")
@@ -1493,7 +1434,6 @@ NAV = {
     ],
     "Models": [
         st.Page(page_all_models, title="All models", icon="📈", url_path="all-models"),
-        st.Page(page_feature_importance, title="Feature importance", icon="🧩", url_path="feature-importance"),
         st.Page(page_hybrid, title="Hybrid model", icon="🔀", url_path="hybrid-model"),
         st.Page(page_rf_xgb, title="RF vs XGBoost", icon="⚔️", url_path="rf-vs-xgboost"),
         st.Page(page_best, title="Best model & why", icon="🏆", url_path="best-model"),
