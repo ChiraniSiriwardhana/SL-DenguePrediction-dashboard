@@ -1,0 +1,4 @@
+Model,MAE_full,MAE_whatif
+Random Forest,13.8213,13.5636
+Linear Regression,13.1996,13.0427
+Stacking,13.7608,13.3785
