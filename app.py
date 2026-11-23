@@ -582,8 +582,7 @@ def page_latest_forecast():
         st.markdown(f"**In simple words:** the model expects about **{predicted:.0f}** reported dengue cases in "
                     f"{district} next week, which is {trend} last week ({last:.0f}). The most likely range is "
                     f"{lo:.0f} to {hi:.0f}. The level **{level}** compares this with what is usual for {district}.")
-        st.info("General advice: regularly empty and clean containers that hold standing water (pots, tyres, "
-                "gutters), because dengue mosquitoes breed there.")
+        
     else:
         st.subheader("How reliable is this forecast?")
         sub = test[test["District"] == district]
