@@ -1600,7 +1600,7 @@ def page_research():
     st.markdown("""
 | | **Tabular data** (like this study) | **Image and text data** |
 |---|---|---|
-| **Strengths of RF / boosting** | Handle numbers, counts and categories together; need no scaling; capture non-linear effects and interactions; train quickly on a CPU; give feature importance. On medium-sized tabular datasets, tree-based models remain state-of-the-art (Grinsztajn et al., 2022) | Fast, simple baselines on hand-made or pre-trained features, for example word counts (TF-IDF) or embeddings from a neural network |
+| **Strengths of RF / boosting** | Handle numbers, counts and categories together; need no scaling; capture non-linear effects and interactions; train quickly on a CPU; give feature importance. | Fast, simple baselines on hand-made or pre-trained features, for example word counts (TF-IDF) or embeddings from a neural network |
 | **Limitations** | Cannot predict beyond the range seen in training (a problem for new outbreaks); time-series need hand-made lag features; correlated features share importance; no built-in uncertainty (here the ranges come from past errors) | Single pixels or single words are not meaningful features; trees ignore spatial layout and word order; features must be extracted first. Deep networks (CNNs, Transformers) learn their own features from raw data and generally do better |
 """)
     note("Our study used tabular data only. The image and text points come from the literature and were not tested here.")
