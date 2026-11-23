@@ -140,16 +140,18 @@ st.markdown("""
 
 /* Sidebar acknowledgement */
 .sidebar-footer {
-    border-top: 1px solid #34445C;
+    border-top: 1px solid #365B49;
     margin-top: 28px;
-    padding-top: 16px;
-    color: #AAB8C8;
+    padding-top: 18px;
+    color: #B8C9BE;
     font-size: 0.78rem;
-    line-height: 1.6;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
 }
 
 .sidebar-footer strong {
-    color: #DCEBFA;
+    color: #D9FBE5;
+    font-weight: 700;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -1538,20 +1540,28 @@ NAV = {
 }
 current_page = st.navigation(NAV)
 
-# Sidebar footer
-st.sidebar.markdown("""
+# Sidebar acknowledgement
+st.sidebar.markdown(
+    """
 <div class="sidebar-footer">
-    <strong>AI Assistance:</strong> Claude (Anthopic) supported
-    code generation and explanations.<br><br>
-
-    Dataset selection, model training, deployment and
-    review of results by:<br>
-    <strong>Siriwardhana C.R.H.P.E.R.</strong>
+    <div>
+        <strong>AI Assistance:</strong>
+        Claude (Anthropic) supported code generation and explanations.
+    </div>
+    <div style="margin-top: 12px;">
+        Dataset selection, model training, deployment and
+        review of results by:
+        <br>
+        <strong>Siriwardhana C.R.H.P.E.R.</strong>
+    </div>
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True
+)
 
-# Display header on every page
+# Header on every page
 render_app_header()
 
-# Run selected page
+# Display selected page
 current_page.run()
+
