@@ -292,6 +292,22 @@ st.markdown("""
     font-size: 2.15rem !important;
     line-height: 1.3 !important;
 }
+/* Best Model and Why Card Only */
+.best-model-card {
+    background: #0B1220 !important;
+    border: 1px solid #263247;
+    border-bottom: 3px solid #263247;
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+.best-model-card h4 {
+    color: #E5E7EB;
+}
+
+.best-model-card p {
+    color: #AAB4C5;
+}
 
 </style>
 """, unsafe_allow_html=True)
