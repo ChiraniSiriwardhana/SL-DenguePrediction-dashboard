@@ -270,7 +270,7 @@ st.markdown("""
 /* Sidebar Acknowledgement */
 .sidebar-footer {
     border-top: none;
-    margin-top: 3px;
+    margin-top: 4px;
     padding-top: 6px;
     color: #B8C9BE;
     font-size: 0.78rem;
