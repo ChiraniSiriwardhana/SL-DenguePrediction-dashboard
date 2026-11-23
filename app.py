@@ -198,16 +198,17 @@ st.markdown("""
 
 /* Main dashboard header */
 .hero-header {
-    background: linear-gradient(110deg, #527C91, #83AFA5);
-    border: 1px solid #A5C7BD;
-    border-radius: 16px;
-    padding: 24px 32px;
-    min-height: 155px;
+    background: linear-gradient(110deg, #14532D, #228B5A);
+    border: 1px solid #2F855A;
+    border-radius: 18px;
+    padding: 36px 40px;
     width: 100%;
     height: auto;
+    min-height: 210px;
     box-sizing: border-box;
     overflow: visible;
-    margin-bottom: 26px;
+    display: block;
+    margin: 0 0 32px 0;
 }
 
 .hero-header h1 {
@@ -219,7 +220,7 @@ st.markdown("""
 }
 
 .hero-header p {
-    color: #F0F7F4;
+    color: #DCFCE7;
     font-size: 1rem;
     margin: 10px 0 0 0;
     line-height: 1.5;
