@@ -498,13 +498,23 @@ def whatif_features(district, codes, prof, week, c0, c1, c2, c3, c4, rain_scale)
 
 
 
-# ================================================================== PAGE: LATEST FORECAST (unchanged)
+# ================================================================== PAGE: LATEST FORECAST 
 def page_latest_forecast():
-    audience = st.sidebar.radio("I am a", ["Member of the public", "Health authority / researcher"])
-    district = st.sidebar.selectbox("District", sorted(fc["District"]))
-    model = st.sidebar.selectbox("Model", fc_models,
-                                 index=fc_models.index(best_model) if best_model in fc_models else 0)
-    st.sidebar.caption(f"Default model: the one with the lowest test MAE ({best_model}).")
+    st.title("Latest-Week Dengue Forecast")
+    st.caption(f"Forecast for the week starting {fc['Forecast_week'].iloc[0]:%d %b %Y} · based on reported cases up to "
+               f"the week starting {fc['Last_data_week'].iloc[0]:%d %b %Y}")
+    st.markdown('<div class="note">⚠️ This is a model-based estimate from a university research project. '
+                'It is <b>not</b> an official health warning and does not confirm an outbreak. For official '
+                'information, contact the Ministry of Health or the National Dengue Control Unit.</div>',
+                unsafe_allow_html=True)
+
+    f1, f2, f3 = st.columns([1.3, 1, 1])
+    audience = f1.radio("I am a", ["Member of the public", "Health authority / researcher"],
+                        horizontal=True, key="lf_audience")
+    district = f2.selectbox("District", sorted(fc["District"]), key="lf_district")
+    model = f3.selectbox("Model", fc_models,
+                         index=fc_models.index(best_model) if best_model in fc_models else 0, key="lf_model")
+    st.caption(f"Default model: the one with the lowest test MAE ({best_model}).")
     public = audience.startswith("Member")
 
     row = fc[fc["District"] == district].iloc[0]
@@ -514,14 +524,7 @@ def page_latest_forecast():
     lo_a, hi_a = apply_interval([predicted], interval_band(model))
     lo, hi = float(lo_a[0]), float(hi_a[0])
     color = RISK_COLORS[level]
-
-    st.title("Latest-week dengue forecast")
-    st.caption(f"Forecast for the week starting {row['Forecast_week']:%d %b %Y} · based on reported cases up to "
-               f"the week starting {row['Last_data_week']:%d %b %Y}")
-    st.markdown('<div class="note">⚠️ This is a model-based estimate from a university research project. '
-                'It is <b>not</b> an official health warning and does not confirm an outbreak. For official '
-                'information, contact the Ministry of Health or the National Dengue Control Unit.</div>',
-                unsafe_allow_html=True)
+    st.write("")
 
     c1, c2, c3, c4 = st.columns(4)
     with c1:
@@ -766,7 +769,7 @@ def page_whatif():
 def page_dataset():
     raw = load_raw()
     clean = raw.drop(columns=DROP_COLS)
-    st.title("The dataset")
+    st.title("Data Overview")
     st.caption("Weekly dengue cases and weather for the 25 districts of Sri Lanka, 2007 to July 2024.")
 
     c1, c2, c3, c4, c5 = st.columns(5)
