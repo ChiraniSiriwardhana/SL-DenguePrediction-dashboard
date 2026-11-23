@@ -80,8 +80,67 @@ st.markdown("""
 .flow .box {flex:1; min-width:170px; background:#121B2E; border:1px solid #223152; border-radius:12px; padding:12px 14px;}
 .flow .box b {color:#E6EDF7;} .flow .box span {color:#9FB2D0; font-size:.85rem;}
 .flow .arrow {align-self:center; color:#4DA3FF; font-size:1.6rem;}
+/* Main dashboard header */
+.hero-header {
+    background: linear-gradient(110deg, #1E3A5F, #256D85);
+    border-radius: 16px;
+    padding: 25px 32px;
+    margin-bottom: 28px;
+    border: 1px solid #315F7D;
+}
+
+.hero-header h1 {
+    color: #FFFFFF;
+    font-size: 2.15rem;
+    font-weight: 750;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.hero-header p {
+    color: #DCEBFA;
+    font-size: 1rem;
+    margin: 7px 0 0 0;
+}
+
+/* Sidebar navigation font sizes */
+.stSidebar [data-testid="stSidebarNav"] a {
+    font-size: 1.08rem;
+    font-weight: 600;
+}
+
+.stSidebar [data-testid="stSidebarNav"] span {
+    font-size: 1.05rem;
+}
+
+.stSidebar [data-testid="stSidebarNav"] section {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Sidebar acknowledgement */
+.sidebar-footer {
+    border-top: 1px solid #34445C;
+    margin-top: 28px;
+    padding-top: 16px;
+    color: #AAB8C8;
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+.sidebar-footer strong {
+    color: #DCEBFA;
+}
 </style>
 """, unsafe_allow_html=True)
+
+def render_app_header():
+    st.markdown("""
+    <div class="hero-header">
+        <h1>🦟 Sri Lanka Dengue Risk Prediction</h1>
+        <p>Weekly District-Level Dengue Forecasting Dashboard</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def kpi(label, value, sub="", color=None):
@@ -1458,5 +1517,21 @@ NAV = {
     ],
 }
 current_page = st.navigation(NAV)
-st.sidebar.caption("🦟 Sri Lanka Dengue Forecast · weekly cases · 25 districts")
+
+# Sidebar footer
+st.sidebar.markdown("""
+<div class="sidebar-footer">
+    <strong>AI Assistance:</strong> Claude (Anthopic) supported
+    code generation and explanations.<br><br>
+
+    Dataset selection, model training, deployment and
+    review of results by:<br>
+    <strong>Siriwardhana C.R.H.P.E.R.</strong>
+</div>
+""", unsafe_allow_html=True)
+
+# Display header on every page
+render_app_header()
+
+# Run selected page
 current_page.run()
