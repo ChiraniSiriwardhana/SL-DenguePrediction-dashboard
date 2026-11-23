@@ -1,0 +1,10 @@
+Model,Training_time_sec
+Naive,0.0
+Linear Regression,0.46
+ARIMA,4.8
+Random Forest,81.7
+XGBoost,2.2
+LightGBM,8.3
+CatBoost,5.2
+Stacking,309.4
+Hybrid ARIMA + RF,70.3
