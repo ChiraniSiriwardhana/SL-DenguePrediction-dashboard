@@ -21,6 +21,10 @@ Weekly, district-level dengue forecasting for Sri Lanka, with a comparison of en
 
 ## What the app is
 
+![Dashboard  1](images/dashboard1.png)
+
+![Dashboard  2](images/dashboard2.png)
+
 Using weekly dengue cases and weather data for the 25 districts of Sri Lanka (2007 to July 2024), the project predicts
 the number of reported dengue cases in the **next week**. It has two parts:
 
