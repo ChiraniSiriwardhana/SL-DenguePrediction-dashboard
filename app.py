@@ -1370,20 +1370,19 @@ def page_research():
 def page_about():
     st.title("About and limitations")
     st.markdown("""
-**Project.** *Comparative Analysis of Ensemble Learning and Hybrid Models for Dengue Case Prediction in Sri Lanka.*
+**Project.**
+
+*Comparative Analysis of Ensemble Learning and Hybrid Models for Dengue Case Prediction in Sri Lanka.*
 Weekly dengue cases and weather data (22,900 records, 25 districts, 2007–2024) were used to forecast the number of
 reported cases in the **next week**. Bagging (Random Forest), boosting (XGBoost, LightGBM, CatBoost), stacking and a
 hybrid ARIMA + Random Forest model were compared with a Naive forecast, Linear Regression and ARIMA.
-
-**Pages.** *Latest Forecast* (next-week forecast of all districts, made in the notebook from the last week of data),
-*Dengue Predictor* (what-if tool for any district and week of the year from a few inputs), *Dataset*, *All models*,
-*Feature importance*, *Hybrid model*, *RF vs XGBoost*, *Best model & why*, *Research*.
 
 **How the data were split.** Chronologically, never at random: training up to 2020, validation 2021–2022, test
 2023-01 to 2024-07. Hyperparameters were chosen on the validation set. The convex-weight stacking version was
 added after the first (Ridge) stacking performed poorly on the test set, and both are reported in the notebook.
 
 **How to read the numbers**
+
 - **MAE**: the average number of cases by which a forecast is wrong (lower is better).
 - **RMSE**: like MAE, but large errors in outbreak weeks count more (lower is better).
 - **R²**: the share of the variation in next-week cases that the model explains (higher is better).
@@ -1395,6 +1394,7 @@ added after the first (Ridge) stacking performed poorly on the test set, and bot
   coverage shown for health authorities tells how often actual cases fell inside it.
 
 **Limitations**
+
 - The data end in July 2024. This is a demonstration, not a live surveillance system.
 - The Dengue Predictor fills 16 of the 24 model features with district-week averages, so it is a what-if tool, not a
   validated forecast. Its accuracy was measured with a backtest (shown on that page).
@@ -1405,8 +1405,18 @@ added after the first (Ridge) stacking performed poorly on the test set, and bot
 - Differences between the best models are small and were not tested for statistical significance.
 - Nothing on this dashboard is an official health warning.
 
-**Credits.** Data: Sri Lanka weekly dengue and weather data 2007–2024 (source repository:
+**Credits.
+
+** Data: Sri Lanka weekly dengue and weather data 2007–2024 (source repository:
 rajaththomson/sri-lanka-dengue-fever-analysis). District boundaries: Natural Earth (public domain), simplified.
+
+**Tools & Links**
+
+- **Training:** Google Colab, scikit-learn, XGBoost, LightGBM, CatBoost
+- **Dashboard:** Streamlit, Plotly
+- **Code Repository:** [SL Dengue Prediction Dashboard](https://github.com/ChiraniSiriwardhana/SL-DenguePrediction-dashboard)
+- **Google Colab Notebook:** [Open Training Notebook](https://colab.research.google.com/drive/1BkcAJhWFWFsqvuumIJKepReC2PNs3FQH#scrollTo=gs8xIUZWNusf)
+- **Dataset Source:** [Sri Lanka Dengue Fever Analysis](https://github.com/rajaththomson/sri-lanka-dengue-fever-analysis)
 """)
 
 
