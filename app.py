@@ -1369,55 +1369,72 @@ def page_research():
 # ================================================================== PAGE: ABOUT
 def page_about():
     st.title("About and limitations")
+
+    # Custom styling for section headings
     st.markdown("""
-**Project.**
+    <style>
+    .about-section-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-top: 24px;
+        margin-bottom: 12px;
+        color: inherit;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-*Comparative Analysis of Ensemble Learning and Hybrid Models for Dengue Case Prediction in Sri Lanka.*
-Weekly dengue cases and weather data (22,900 records, 25 districts, 2007–2024) were used to forecast the number of
-reported cases in the **next week**. Bagging (Random Forest), boosting (XGBoost, LightGBM, CatBoost), stacking and a
-hybrid ARIMA + Random Forest model were compared with a Naive forecast, Linear Regression and ARIMA.
+    st.markdown("""
+    <div class="about-section-title">Project</div>
 
-**How the data were split.** Chronologically, never at random: training up to 2020, validation 2021–2022, test
-2023-01 to 2024-07. Hyperparameters were chosen on the validation set. The convex-weight stacking version was
-added after the first (Ridge) stacking performed poorly on the test set, and both are reported in the notebook.
+    *Comparative Analysis of Ensemble Learning and Hybrid Models for Dengue Case Prediction in Sri Lanka.*
 
-**How to read the numbers**
+    Weekly dengue cases and weather data (22,900 records, 25 districts, 2007–2024) were used to forecast the number of
+    reported cases in the **next week**. Bagging (Random Forest), boosting (XGBoost, LightGBM, CatBoost), stacking and a
+    hybrid ARIMA + Random Forest model were compared with a Naive forecast, Linear Regression and ARIMA.
 
-- **MAE**: the average number of cases by which a forecast is wrong (lower is better).
-- **RMSE**: like MAE, but large errors in outbreak weeks count more (lower is better).
-- **R²**: the share of the variation in next-week cases that the model explains (higher is better).
-- **MAPE**: the average percentage error, calculated only on weeks with at least one case.
-- **Accuracy %**: 100 × (1 − MAE ÷ average actual cases). It is a rescaled MAE and ranks models like MAE.
-- **Risk level**: *Low* if the cases are at or below the district's median of the training period, *Medium* up to
-  its 80th percentile, *High* above that. It is relative to each district's own history, not an official threshold.
-- **Forecast range**: built from the validation-period errors of each model (10th–90th percentile). The test
-  coverage shown for health authorities tells how often actual cases fell inside it.
+    <div class="about-section-title">How the data were split</div>
 
-**Limitations**
+    Chronologically, never at random: training up to 2020, validation 2021–2022, test
+    2023-01 to 2024-07. Hyperparameters were chosen on the validation set. The convex-weight stacking version was
+    added after the first (Ridge) stacking performed poorly on the test set, and both are reported in the notebook.
 
-- The data end in July 2024. This is a demonstration, not a live surveillance system.
-- The Dengue Predictor fills 16 of the 24 model features with district-week averages, so it is a what-if tool, not a
-  validated forecast. Its accuracy was measured with a backtest (shown on that page).
-- Weather has only a small effect on the forecasts, so changing it moves the results little.
-- Forecasts use last week's reported cases; reporting delays would reduce accuracy.
-- The models predict *reported* cases, not true infections, and large outbreaks are hard to predict.
-- The test period has more cases than the training period (distribution shift), so test errors are larger.
-- Differences between the best models are small and were not tested for statistical significance.
-- Nothing on this dashboard is an official health warning.
+    <div class="about-section-title">How to read the numbers</div>
 
-**Credits.
+    - **MAE**: the average number of cases by which a forecast is wrong (lower is better).
+    - **RMSE**: like MAE, but large errors in outbreak weeks count more (lower is better).
+    - **R²**: the share of the variation in next-week cases that the model explains (higher is better).
+    - **MAPE**: the average percentage error, calculated only on weeks with at least one case.
+    - **Accuracy %**: 100 × (1 − MAE ÷ average actual cases). It is a rescaled MAE and ranks models like MAE.
+    - **Risk level**: *Low* if the cases are at or below the district's median of the training period, *Medium* up to
+      its 80th percentile, *High* above that. It is relative to each district's own history, not an official threshold.
+    - **Forecast range**: built from the validation-period errors of each model (10th–90th percentile). The test
+      coverage shown for health authorities tells how often actual cases fell inside it.
 
-** Data: Sri Lanka weekly dengue and weather data 2007–2024 (source repository:
-rajaththomson/sri-lanka-dengue-fever-analysis). District boundaries: Natural Earth (public domain), simplified.
+    <div class="about-section-title">Limitations</div>
 
-**Tools & Links**
+    - The data end in July 2024. This is a demonstration, not a live surveillance system.
+    - The Dengue Predictor fills 16 of the 24 model features with district-week averages, so it is a what-if tool, not a
+      validated forecast. Its accuracy was measured with a backtest (shown on that page).
+    - Weather has only a small effect on the forecasts, so changing it moves the results little.
+    - Forecasts use last week's reported cases; reporting delays would reduce accuracy.
+    - The models predict *reported* cases, not true infections, and large outbreaks are hard to predict.
+    - The test period has more cases than the training period (distribution shift), so test errors are larger.
+    - Differences between the best models are small and were not tested for statistical significance.
+    - Nothing on this dashboard is an official health warning.
 
-- **Training:** Google Colab, scikit-learn, XGBoost, LightGBM, CatBoost
-- **Dashboard:** Streamlit, Plotly
-- **Code Repository:** [SL Dengue Prediction Dashboard](https://github.com/ChiraniSiriwardhana/SL-DenguePrediction-dashboard)
-- **Google Colab Notebook:** [Open Training Notebook](https://colab.research.google.com/drive/1BkcAJhWFWFsqvuumIJKepReC2PNs3FQH#scrollTo=gs8xIUZWNusf)
-- **Dataset Source:** [Sri Lanka Dengue Fever Analysis](https://github.com/rajaththomson/sri-lanka-dengue-fever-analysis)
-""")
+    <div class="about-section-title">Credits</div>
+
+    Data: Sri Lanka weekly dengue and weather data 2007–2024 (source repository:
+    rajaththomson/sri-lanka-dengue-fever-analysis). District boundaries: Natural Earth (public domain), simplified.
+
+    <div class="about-section-title">Tools & Links</div>
+
+    - **Training:** Google Colab, scikit-learn, XGBoost, LightGBM, CatBoost
+    - **Dashboard:** Streamlit, Plotly
+    - **Code Repository:** [SL Dengue Prediction Dashboard](https://github.com/ChiraniSiriwardhana/SL-DenguePrediction-dashboard)
+    - **Google Colab Notebook:** [Open Training Notebook](https://colab.research.google.com/drive/1BkcAJhWFWFsqvuumIJKepReC2PNs3FQH#scrollTo=gs8xIUZWNusf)
+    - **Dataset Source:** [Sri Lanka Dengue Fever Analysis](https://github.com/rajaththomson/sri-lanka-dengue-fever-analysis)
+    """, unsafe_allow_html=True)
 
 
 # ------------------------------------------------------------------ navigation (sections in the sidebar)
