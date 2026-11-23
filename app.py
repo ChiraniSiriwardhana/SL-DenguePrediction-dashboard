@@ -614,9 +614,7 @@ def page_whatif():
     st.title("Dengue Predictor")
     st.caption("Choose a district and a week of the year, enter the recent dengue cases and how wet it has been, "
                "and get the expected cases for the **following week**.")
-    note("🧪 <b>What-if scenario tool, not a validated forecast.</b> It works for any week of any year, but the "
-         "numbers you enter carry almost the whole prediction, and reporting and population patterns may have "
-         "changed since the 2007–2024 data. " + DISCLAIMER.replace("⚠️ ", ""))
+    
     if prof is None:
         st.error("`district_week_profile.csv` was not found. Run the export cell at the end of the notebook "
                  "and upload `district_week_profile.csv`, `whatif_backtest.csv`, `predictor_params.json` and the "
@@ -1101,10 +1099,8 @@ def page_hybrid():
              "The residuals used to train the Random Forest come from ARIMA predictions on the same years ARIMA was "
              "fitted on. ARIMA(1,0,0) has very few parameters (its training MAE 10.65 is close to its validation MAE "
              "10.76), so this effect is probably small, but it was not checked with out-of-fold residuals. "
-             "Differences between the top models were not tested for statistical significance.", "Caveat")
-    st.info("The course slide also suggests an RF + ANN hybrid for tabular regression. That combination was not "
-            "built in this study (see the Research page).")
-
+             "Differences between the top models were not tested for statistical significance.")
+   
 
 # ================================================================== PAGE: RF vs XGBOOST
 def page_rf_xgb():
