@@ -64,7 +64,7 @@ GROUP_COLORS = {"Case history": "#4DA3FF", "Current weather": "#F59E0B", "Rainfa
 # ------------------------------------------------------------------ styling
 st.markdown("""
 <style>
-.block-container {padding-top: 1.6rem; padding-bottom: 2rem; max-width: 1400px;}
+.block-container {padding-top: 2rem; padding-bottom: 2rem; max-width: 1400px;}
 .kpi {background:#121B2E; border:1px solid #223152; border-radius:14px; padding:14px 18px; height:100%;}
 .kpi .label {font-size:.72rem; color:#8FA3C0; text-transform:uppercase; letter-spacing:.08em;}
 .kpi .value {font-size:2rem; font-weight:700; line-height:1.3; color:#E6EDF7;}
@@ -82,25 +82,45 @@ st.markdown("""
 .flow .arrow {align-self:center; color:#4DA3FF; font-size:1.6rem;}
 /* Main dashboard header */
 .hero-header {
-    background: linear-gradient(110deg, #1E3A5F, #256D85);
-    border-radius: 16px;
-    padding: 25px 32px;
-    margin-bottom: 28px;
-    border: 1px solid #315F7D;
+    background: linear-gradient(110deg, #14532D, #228B5A);
+    border: 1px solid #2F855A;
+    border-radius: 18px;
+    padding: 34px 40px;
+    min-height: 190px;
+    margin-bottom: 32px;
+    box-sizing: border-box;
+    overflow: visible;
 }
 
 .hero-header h1 {
     color: #FFFFFF;
-    font-size: 2.15rem;
+    font-size: 2.45rem;
     font-weight: 750;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.35;
 }
 
 .hero-header p {
-    color: #DCEBFA;
-    font-size: 1rem;
-    margin: 7px 0 0 0;
+    color: #DCFCE7;
+    font-size: 1.08rem;
+    margin: 12px 0 0 0;
+    line-height: 1.5;
+}
+
+/* Responsive header */
+@media (max-width: 768px) {
+    .hero-header {
+        padding: 24px 22px;
+        min-height: 150px;
+    }
+
+    .hero-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .hero-header p {
+        font-size: 0.9rem;
+    }
 }
 
 /* Sidebar navigation font sizes */
