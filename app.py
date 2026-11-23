@@ -381,7 +381,7 @@ DISCLAIMER = ("⚠️ This is a model-based estimate from a university research 
 
 # ------------------------------------------------------------------ data loading
 def find(name):
-    for p in (BASE / name, BASE / "data" / name):
+    for p in (BASE / name, BASE / "outputs" / name, BASE / "models" / name, BASE / "data" / name):
         if p.exists():
             return p
     raise FileNotFoundError(name)
