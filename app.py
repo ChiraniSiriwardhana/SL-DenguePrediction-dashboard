@@ -81,20 +81,23 @@ st.markdown("""
 .flow .box b {color:#E6EDF7;} .flow .box span {color:#9FB2D0; font-size:.85rem;}
 .flow .arrow {align-self:center; color:#4DA3FF; font-size:1.6rem;}
 /* Main dashboard header */
+
 .hero-header {
     background: linear-gradient(110deg, #14532D, #228B5A);
     border: 1px solid #2F855A;
-    border-radius: 18px;
-    padding: 34px 40px;
-    min-height: 190px;
-    margin-bottom: 32px;
+    border-radius: 16px;
+    padding: 24px 32px;
+    min-height: 155px;
+    width: 100%;
+    height: auto;
     box-sizing: border-box;
     overflow: visible;
+    margin-bottom: 26px;
 }
 
 .hero-header h1 {
     color: #FFFFFF;
-    font-size: 2.45rem;
+    font-size: 2.15rem;
     font-weight: 750;
     margin: 0;
     line-height: 1.35;
@@ -102,9 +105,25 @@ st.markdown("""
 
 .hero-header p {
     color: #DCFCE7;
-    font-size: 1.08rem;
-    margin: 12px 0 0 0;
+    font-size: 1rem;
+    margin: 10px 0 0 0;
     line-height: 1.5;
+}
+
+/* Responsive header */
+@media (max-width: 768px) {
+    .hero-header {
+        padding: 20px;
+        min-height: 130px;
+    }
+
+    .hero-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-header p {
+        font-size: 0.9rem;
+    }
 }
 
 /* Responsive header */
@@ -140,7 +159,7 @@ st.markdown("""
 
 /* Sidebar acknowledgement */
 .sidebar-footer {
-    border-top: 1px solid #365B49;
+    border-top: none !important;
     margin-top: 28px;
     padding-top: 18px;
     color: #B8C9BE;
@@ -152,6 +171,11 @@ st.markdown("""
 .sidebar-footer strong {
     color: #D9FBE5;
     font-weight: 700;
+}
+/* Reduce page title size on all pages */
+.stApp [data-testid="stMain"] h1 {
+    font-size: 2.15rem !important;
+    line-height: 1.3 !important;
 }
 </style>
 """, unsafe_allow_html=True)
