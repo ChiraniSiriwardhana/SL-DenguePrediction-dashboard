@@ -515,7 +515,7 @@ def page_latest_forecast():
     lo, hi = float(lo_a[0]), float(hi_a[0])
     color = RISK_COLORS[level]
 
-    st.title("Next-week dengue forecast")
+    st.title("Latest-week dengue forecast")
     st.caption(f"Forecast for the week starting {row['Forecast_week']:%d %b %Y} · based on reported cases up to "
                f"the week starting {row['Last_data_week']:%d %b %Y}")
     st.markdown('<div class="note">⚠️ This is a model-based estimate from a university research project. '
