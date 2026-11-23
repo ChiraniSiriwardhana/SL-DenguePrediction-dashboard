@@ -69,7 +69,23 @@ st.markdown("""
 
 /* Import Poppins Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* Fix white strip at top/bottom edges while scrolling */
+html, body {
+    background-color: #0B1220 !important;
+    overscroll-behavior: none;
+}
 
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stBottom"],
+[data-testid="stBottomBlockContainer"] {
+    background-color: #0B1220 !important;
+}
+
+[data-testid="stHeader"] {
+    background-color: #0B1220 !important;
+}
 .block-container {
     padding-top: 4rem;
     padding-bottom: 2rem;
