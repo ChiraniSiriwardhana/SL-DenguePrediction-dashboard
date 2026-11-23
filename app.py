@@ -1515,7 +1515,7 @@ def page_best():
         card("1. Dengue cases repeat from week to week",
              "The average lag-1 autocorrelation is 0.85, and the feature importances show that the current and "
              "previous weeks' cases dominate the predictions. That is why the Naive forecast is already hard to beat.",
-             "Measured"
+             "Measured",
              extra_class="best-model-card"
     
             )
@@ -1523,7 +1523,7 @@ def page_best():
         card("3. Trees cannot go beyond what they have seen",
              "Random Forest and boosting models predict averages of training cases, so in new, much larger outbreaks "
              "they tend to under-predict. The test period has more cases (mean 59.4 vs 32.1 in training); the bias "
-             "chart above shows whether the models under-predict overall.", "Hypothesis"
+             "chart above shows whether the models under-predict overall.", "Hypothesis",
              extra_class="best-model-card"
              )
         st.write("")
@@ -1531,14 +1531,14 @@ def page_best():
              "The four base models make almost the same predictions (correlation 0.974–0.995), so combining them "
              "adds little. The first Ridge stacking failed because its weights learned from out-of-fold predictions "
              "(which under-predicted the 2017 outbreak) were scaled up (sum 1.29) and then over-predicted. "
-             "With weights constrained to sum to 1 the test MAE improved from 21.2 to 13.8.", "Measured"
+             "With weights constrained to sum to 1 the test MAE improved from 21.2 to 13.8.", "Measured",
              extra_class="best-model-card"
              )
     with g2:
         card("2. Weather adds only a little",
              "Weather features have weak correlations with cases, with rainfall linked more strongly 8–9 weeks "
              "earlier (Spearman 0.18), and in the feature importance of the notebook the case features dominate. "
-             "A model without weather was not tested, so the exact benefit of weather is unknown.", "Measured"
+             "A model without weather was not tested, so the exact benefit of weather is unknown.", "Measured",
              extra_class="best-model-card"
              )
         st.write("")
@@ -1546,11 +1546,11 @@ def page_best():
              f"XGBoost has a similar MAE to the Random Forest but a clearly higher validation RMSE "
              f"({comp.loc['XGBoost', 'RMSE (Validation)']:.1f} vs {comp.loc['Random Forest', 'RMSE (Validation)']:.1f}), "
              "which suggests larger errors in a few outbreak weeks. It was also tuned over fewer configurations. "
-             "Which of these reasons matters more was not tested.", "Measured + hypothesis"
+             "Which of these reasons matters more was not tested.", "Measured + hypothesis",
              extra_class="best-model-card"
              )
         st.write("")
-        card("6. The hybrid helps mainly where it was trained", hybrid_text, "Measured + hypothesis"
+        card("6. The hybrid helps mainly where it was trained", hybrid_text, "Measured + hypothesis",
         extra_class="best-model-card"
         )
 
