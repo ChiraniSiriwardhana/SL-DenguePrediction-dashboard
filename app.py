@@ -61,9 +61,12 @@ GROUP_COLORS = {"Case history": "#4DA3FF", "Current weather": "#F59E0B", "Rainfa
                 "Temperature history": "#FB923C", "Season": "#A78BFA", "District": "#9CA3AF",
                 "ARIMA forecast": "#F43F5E"}
 
-# ------------------------------------------------------------------ styling
+
+# ------------------------------------------------------------------
+# Styling
 st.markdown("""
 <style>
+
 /* Import Poppins Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -75,18 +78,18 @@ st.markdown("""
 
 /* KPI Cards */
 .kpi {
-    background: #E3EDF7;
-    border: 1px solid #C5D7E8;
-    border-bottom: 3px solid #9BB8D3;
+    background: #F8E1D5;
+    border: 1px solid #EBC8B9;
+    border-bottom: 3px solid #D99A8C;
     border-radius: 14px;
     padding: 14px 18px;
     height: 100%;
-    box-shadow: 0 4px 10px rgba(30, 50, 70, 0.10);
+    box-shadow: 0 4px 10px rgba(60, 40, 30, 0.10);
 }
 
 .kpi .label {
     font-size: .72rem;
-    color: #52677F;
+    color: #80665D;
     text-transform: uppercase;
     letter-spacing: .08em;
 }
@@ -95,12 +98,12 @@ st.markdown("""
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.3;
-    color: #193653;
+    color: #59433D;
 }
 
 .kpi .sub {
     font-size: .8rem;
-    color: #52677F;
+    color: #80665D;
 }
 
 /* Pills */
@@ -114,36 +117,36 @@ st.markdown("""
 
 /* Note */
 .note {
-    background: #F4EBDD;
-    border-left: 4px solid #D6A96C;
+    background: #F2D2C3;
+    border-left: 4px solid #D99A8C;
     border-radius: 8px;
     padding: 10px 14px;
-    color: #654F35;
+    color: #59433D;
     font-size: .9rem;
     margin-bottom: .8rem;
 }
 
 /* General Cards */
 .card {
-    background: #EAE5F4;
-    border: 1px solid #D5CBE8;
-    border-bottom: 3px solid #B9A9D5;
+    background: #F8E1D5;
+    border: 1px solid #EBC8B9;
+    border-bottom: 3px solid #D99A8C;
     border-radius: 14px;
     padding: 16px 20px;
     height: 100%;
-    box-shadow: 0 4px 10px rgba(50, 40, 70, 0.10);
+    box-shadow: 0 4px 10px rgba(60, 40, 30, 0.10);
 }
 
 .card h4 {
     margin: 0 0 .4rem 0;
     font-size: 1rem;
-    color: #51416D;
+    color: #59433D;
 }
 
 .card p {
     margin: 0;
     font-size: .9rem;
-    color: #625875;
+    color: #80665D;
 }
 
 /* Tags */
@@ -151,8 +154,8 @@ st.markdown("""
     font-size: .7rem;
     padding: 1px 8px;
     border-radius: 999px;
-    border: 1px solid #B9A9D5;
-    color: #51416D;
+    border: 1px solid #D99A8C;
+    color: #80584F;
 }
 
 /* Flow Cards */
@@ -167,39 +170,39 @@ st.markdown("""
 .flow .box {
     flex: 1;
     min-width: 170px;
-    background: #DFEEE9;
-    border: 1px solid #C3DDD3;
-    border-bottom: 3px solid #9FC7B7;
+    background: #F3DCD0;
+    border: 1px solid #E7C5B5;
+    border-bottom: 3px solid #D5A18F;
     border-radius: 12px;
     padding: 12px 14px;
-    box-shadow: 0 4px 10px rgba(30, 60, 50, 0.10);
+    box-shadow: 0 4px 10px rgba(60, 40, 30, 0.10);
 }
 
 .flow .box b {
-    color: #205B4B;
+    color: #684A40;
 }
 
 .flow .box span {
-    color: #52766A;
+    color: #896B60;
     font-size: .85rem;
 }
 
 .flow .arrow {
     align-self: center;
-    color: #6B9C87;
+    color: #C78372;
     font-size: 1.6rem;
 }
 
-/* Card hover effect */
+/* Card Hover Effect */
 .kpi:hover,
 .card:hover,
 .flow .box:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(30, 50, 70, 0.15);
+    box-shadow: 0 6px 14px rgba(60, 40, 30, 0.15);
     transition: all 0.2s ease;
 }
 
-/* Main dashboard header */
+/* Main Dashboard Header - Original Green */
 .hero-header {
     background: linear-gradient(110deg, #14532D, #228B5A);
     border: 1px solid #2F855A;
@@ -215,7 +218,7 @@ st.markdown("""
 }
 
 .hero-header h1 {
-     font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #FFFFFF;
     font-size: 2.4rem;
     font-weight: 700;
@@ -225,7 +228,7 @@ st.markdown("""
 }
 
 .hero-header p {
-   font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #DCFCE7;
     font-size: 1.08rem;
     font-weight: 400;
@@ -233,7 +236,7 @@ st.markdown("""
     line-height: 1.6;
 }
 
-/* Responsive header */
+/* Responsive Header */
 @media (max-width: 768px) {
     .hero-header {
         padding: 20px;
@@ -249,7 +252,7 @@ st.markdown("""
     }
 }
 
-/* Sidebar navigation */
+/* Sidebar Navigation */
 .stSidebar [data-testid="stSidebarNav"] a {
     font-size: 1.08rem;
     font-weight: 600;
@@ -264,7 +267,7 @@ st.markdown("""
     font-weight: 700;
 }
 
-/* Sidebar acknowledgement */
+/* Sidebar Acknowledgement */
 .sidebar-footer {
     border-top: none;
     margin-top: 4px;
@@ -284,13 +287,15 @@ st.markdown("""
     margin-top: 8px;
 }
 
-/* Page titles */
+/* Page Titles */
 .stApp [data-testid="stMain"] h1 {
     font-size: 2.15rem !important;
     line-height: 1.3 !important;
 }
+
 </style>
 """, unsafe_allow_html=True)
+
 
 def render_app_header():
     st.markdown("""
