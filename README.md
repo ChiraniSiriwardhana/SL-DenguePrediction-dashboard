@@ -31,17 +31,22 @@ Using weekly dengue cases and weather data for Sri Lanka's 25 districts (2007 to
 
 ```
 SL-DenguePrediction-dashboard/
-├── app.py                         # Streamlit dashboard
-├── requirements.txt               # dashboard packages
+├── app.py
+├── requirements.txt
 ├── notebooks/
 │   └── Sri_Lanka_Dengue_Ensemble_Learning.ipynb
-├── .streamlit/config.toml         # dark theme
-├── data/Sri_Lanka_Dengue_Dataset.csv
-├── sri_lanka_districts.geojson    # district boundaries for maps
-├── predictions.csv, model_comparison.csv, risk_thresholds.csv,
-│   forecast_next_week.csv, training_time.csv      # notebook results
-└── rf_model.joblib, catboost_model.cbm, predictor_params.json,
-    district_week_profile.csv, whatif_backtest.csv # Dengue Predictor files
+├── .streamlit/config.toml
+├── data/
+│   └── Sri_Lanka_Dengue_Dataset.csv
+├── sri_lanka_districts.geojson
+├── outputs/                  # results created by the notebook
+│   ├── predictions.csv, model_comparison.csv, risk_thresholds.csv,
+│   ├── forecast_next_week.csv, training_time.csv,
+│   └── district_week_profile.csv, whatif_backtest.csv
+└── models/                   # trained models for the Dengue Predictor
+    ├── rf_model.joblib
+    ├── catboost_model.cbm
+    └── predictor_params.json
 ```
 
 ## Run the notebook
