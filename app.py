@@ -64,6 +64,9 @@ GROUP_COLORS = {"Case history": "#4DA3FF", "Current weather": "#F59E0B", "Rainfa
 # ------------------------------------------------------------------ styling
 st.markdown("""
 <style>
+/* Import Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 .block-container {
     padding-top: 4rem;
     padding-bottom: 2rem;
@@ -212,18 +215,22 @@ st.markdown("""
 }
 
 .hero-header h1 {
+     font-family: 'Poppins', sans-serif;
     color: #FFFFFF;
-    font-size: 2.15rem;
-    font-weight: 750;
+    font-size: 2.4rem;
+    font-weight: 700;
     margin: 0;
     line-height: 1.35;
+    letter-spacing: 0.3px;
 }
 
 .hero-header p {
+   font-family: 'Poppins', sans-serif;
     color: #DCFCE7;
-    font-size: 1rem;
-    margin: 10px 0 0 0;
-    line-height: 1.5;
+    font-size: 1.08rem;
+    font-weight: 400;
+    margin: 12px 0 0 0;
+    line-height: 1.6;
 }
 
 /* Responsive header */
