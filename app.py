@@ -292,21 +292,25 @@ st.markdown("""
     font-size: 2.15rem !important;
     line-height: 1.3 !important;
 }
-/* Best Model and Why Card Only */
-.best-model-card {
+/* Best Model and Why Cards Only */
+.card.best-model-card {
     background: #0B1220 !important;
-    border: 1px solid #263247;
-    border-bottom: 3px solid #263247;
-    border-radius: 14px;
+    border: 1px solid #263247 !important;
+    border-bottom: 3px solid #263247 !important;
     box-shadow: none;
 }
 
-.best-model-card h4 {
-    color: #E5E7EB;
+.card.best-model-card h4 {
+    color: #E5E7EB !important;
 }
 
-.best-model-card p {
-    color: #AAB4C5;
+.card.best-model-card p {
+    color: #AAB4C5 !important;
+}
+
+.card.best-model-card .tag {
+    border-color: #52677F;
+    color: #C9D6EC;
 }
 
 </style>
@@ -329,9 +333,12 @@ def kpi(label, value, sub="", color=None):
                 unsafe_allow_html=True)
 
 
-def card(title, text, tag=""):
+def card(title, text, tag="", extra_class=""):
     tag_html = f' <span class="tag">{tag}</span>' if tag else ""
-    st.markdown(f'<div class="card"><h4>{title}{tag_html}</h4><p>{text}</p></div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="card {extra_class}"><h4>{title}{tag_html}</h4><p>{text}</p></div>',
+        unsafe_allow_html=True
+    )
 
 
 def note(text):
@@ -1508,31 +1515,44 @@ def page_best():
         card("1. Dengue cases repeat from week to week",
              "The average lag-1 autocorrelation is 0.85, and the feature importances show that the current and "
              "previous weeks' cases dominate the predictions. That is why the Naive forecast is already hard to beat.",
-             "Measured")
+             "Measured"
+             extra_class="best-model-card"
+    
+            )
         st.write("")
         card("3. Trees cannot go beyond what they have seen",
              "Random Forest and boosting models predict averages of training cases, so in new, much larger outbreaks "
              "they tend to under-predict. The test period has more cases (mean 59.4 vs 32.1 in training); the bias "
-             "chart above shows whether the models under-predict overall.", "Hypothesis")
+             "chart above shows whether the models under-predict overall.", "Hypothesis"
+             extra_class="best-model-card"
+             )
         st.write("")
         card("5. Stacking added little",
              "The four base models make almost the same predictions (correlation 0.974–0.995), so combining them "
              "adds little. The first Ridge stacking failed because its weights learned from out-of-fold predictions "
              "(which under-predicted the 2017 outbreak) were scaled up (sum 1.29) and then over-predicted. "
-             "With weights constrained to sum to 1 the test MAE improved from 21.2 to 13.8.", "Measured")
+             "With weights constrained to sum to 1 the test MAE improved from 21.2 to 13.8.", "Measured"
+             extra_class="best-model-card"
+             )
     with g2:
         card("2. Weather adds only a little",
              "Weather features have weak correlations with cases, with rainfall linked more strongly 8–9 weeks "
              "earlier (Spearman 0.18), and in the feature importance of the notebook the case features dominate. "
-             "A model without weather was not tested, so the exact benefit of weather is unknown.", "Measured")
+             "A model without weather was not tested, so the exact benefit of weather is unknown.", "Measured"
+             extra_class="best-model-card"
+             )
         st.write("")
         card("4. XGBoost is worse in the big weeks",
              f"XGBoost has a similar MAE to the Random Forest but a clearly higher validation RMSE "
              f"({comp.loc['XGBoost', 'RMSE (Validation)']:.1f} vs {comp.loc['Random Forest', 'RMSE (Validation)']:.1f}), "
              "which suggests larger errors in a few outbreak weeks. It was also tuned over fewer configurations. "
-             "Which of these reasons matters more was not tested.", "Measured + hypothesis")
+             "Which of these reasons matters more was not tested.", "Measured + hypothesis"
+             extra_class="best-model-card"
+             )
         st.write("")
-        card("6. The hybrid helps mainly where it was trained", hybrid_text, "Measured + hypothesis")
+        card("6. The hybrid helps mainly where it was trained", hybrid_text, "Measured + hypothesis"
+        extra_class="best-model-card"
+        )
 
 
 # ================================================================== PAGE: RESEARCH
