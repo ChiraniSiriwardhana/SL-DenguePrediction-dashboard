@@ -159,19 +159,25 @@ st.markdown("""
 
 /* Sidebar acknowledgement */
 .sidebar-footer {
-    border-top: none !important;
-    margin-top: 28px;
-    padding-top: 18px;
+    border-top: none;
+    margin-top: 4px;
+    padding-top: 6px;
     color: #B8C9BE;
     font-size: 0.78rem;
-    line-height: 1.7;
-    overflow-wrap: anywhere;
+    line-height: 1.6;
+    overflow-wrap: break-word;
 }
 
 .sidebar-footer strong {
     color: #D9FBE5;
     font-weight: 700;
 }
+
+.sidebar-footer .credit {
+    margin-top: 8px;
+}
+
+
 /* Reduce page title size on all pages */
 .stApp [data-testid="stMain"] h1 {
     font-size: 2.15rem !important;
@@ -1571,11 +1577,7 @@ st.sidebar.markdown(
     <div>
         <strong>AI Assistance:</strong>
         Claude (Anthropic) supported code generation and explanations.
-    </div>
-    <div style="margin-top: 12px;">
-        Dataset selection, model training, deployment and
-        review of results by:
-        <br>
+        Dataset selection, model training, deployment and review of results by:
         <strong>Siriwardhana C.R.H.P.E.R.</strong>
     </div>
 </div>
