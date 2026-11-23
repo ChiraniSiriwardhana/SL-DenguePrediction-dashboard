@@ -220,7 +220,7 @@ st.markdown("""
 .hero-header h1 {
     font-family: 'Poppins', sans-serif;
     color: #FFFFFF;
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 700;
     margin: 0;
     line-height: 1.35;
@@ -1614,7 +1614,7 @@ def page_research():
     with h2:
         card("RF + ANN (tabular regression) ⏳ not done",
              "A neural network could learn the Random Forest's residuals, or be one member of a stacking/weighted "
-             "ensemble. Hybrids of ARIMA and neural networks are a known approach (Zhang, 2003). It would need scaled "
+             "ensemble. It would need scaled "
              "inputs and out-of-fold residuals, and was left as future work.", "Future work")
 
     st.subheader("References")
