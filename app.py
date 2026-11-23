@@ -1153,7 +1153,7 @@ def page_rf_xgb():
         fig.update_layout(yaxis_title="Error (cases per week, lower is better)", xaxis_title="")
         st.plotly_chart(style(fig, 350), width="stretch")
 
-    st.info("Fairness note: in the notebook the Random Forest was tuned over seven configurations and XGBoost over "
+    st.info(" note: in the notebook the Random Forest was tuned over seven configurations and XGBoost over "
             "three, so the tuning effort was not identical. The differences between the tree-based models are small. "
             "All nine models are compared on the **All models** page.")
 
@@ -1193,11 +1193,7 @@ def page_best():
         n_rank = int(list(ranked.index).index("Naive")) + 1
         naive_txt = (f" The simple Naive forecast (next week = this week) has a test MAE of "
                      f"{t.loc['Naive', 'MAE (Test)']:.2f} and ranks {n_rank} of {len(ranked)}.")
-    st.markdown(
-        f"### Verdict\n**{ranked.index[0]}** has the lowest test MAE ({ranked.iloc[0]:.2f}), but the best three models "
-        f"are within **{spread:.1f}%** of each other, and different models win on different metrics "
-        f"({best_rmse} on RMSE, {best_r2} on R²).{naive_txt} So no ensemble model is *clearly* better than the "
-        "simple baselines. The notebook did not run a significance test, so small gaps should not be over-interpreted.")
+ 
 
     board = t[["MAE (Test)", "RMSE (Test)", "R2 (Test)", "Accuracy % (Test)"]].copy()
     board.insert(0, "Rank (MAE)", board["MAE (Test)"].rank().astype(int))
@@ -1304,8 +1300,6 @@ def page_best():
 # ================================================================== PAGE: RESEARCH
 def page_research():
     st.title("Research: comparing ensemble methods")
-    st.caption("Part 1 compares Random Forest with gradient boosting using this study's results. Part 2 discusses "
-               "strengths and limitations on tabular versus image and text data, based on the literature.")
 
     st.subheader("1 · Random Forest vs gradient boosting (XGBoost, LightGBM, CatBoost)")
     st.markdown("""
@@ -1367,13 +1361,8 @@ def page_research():
 
     st.subheader("References")
     st.markdown("""
-- Breiman, L. (2001). Random forests. *Machine Learning, 45*(1), 5–32.
-- Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of Statistics, 29*(5), 1189–1232.
-- Chen, T., & Guestrin, C. (2016). XGBoost: a scalable tree boosting system. *Proceedings of KDD 2016*.
-- Ke, G., et al. (2017). LightGBM: a highly efficient gradient boosting decision tree. *Advances in Neural Information Processing Systems 30*.
-- Prokhorenkova, L., et al. (2018). CatBoost: unbiased boosting with categorical features. *Advances in Neural Information Processing Systems 31*.
-- Grinsztajn, L., Oyallon, E., & Varoquaux, G. (2022). Why do tree-based models still outperform deep learning on typical tabular data? *NeurIPS 2022, Datasets and Benchmarks Track*.
-- Zhang, G. P. (2003). Time series forecasting using a hybrid ARIMA and neural network model. *Neurocomputing, 50*, 159–175.
+ - rajaththomson. (n.d.). *Sri Lanka dengue fever analysis* [Dataset]. GitHub. https://github.com/rajaththomson/sri-lanka-dengue-fever-analysis
+
 """)
 
 
