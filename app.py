@@ -64,7 +64,7 @@ GROUP_COLORS = {"Case history": "#4DA3FF", "Current weather": "#F59E0B", "Rainfa
 # ------------------------------------------------------------------ styling
 st.markdown("""
 <style>
-.block-container {padding-top: 2rem; padding-bottom: 2rem; max-width: 1400px;}
+.block-container {padding-top: 3rem; padding-bottom: 2rem; max-width: 1400px;}
 .kpi {background:#121B2E; border:1px solid #223152; border-radius:14px; padding:14px 18px; height:100%;}
 .kpi .label {font-size:.72rem; color:#8FA3C0; text-transform:uppercase; letter-spacing:.08em;}
 .kpi .value {font-size:2rem; font-weight:700; line-height:1.3; color:#E6EDF7;}
