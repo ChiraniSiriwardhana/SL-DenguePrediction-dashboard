@@ -135,7 +135,7 @@ def load_results():
     return pred, comp, thr, fc, geo
 
 
-@st.cache_data
+
 def load_optional(name):
     try:
         return pd.read_csv(find(name))
