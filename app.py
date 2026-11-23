@@ -64,27 +64,142 @@ GROUP_COLORS = {"Case history": "#4DA3FF", "Current weather": "#F59E0B", "Rainfa
 # ------------------------------------------------------------------ styling
 st.markdown("""
 <style>
-.block-container {padding-top: 4rem; padding-bottom: 2rem; max-width: 1400px;}
-.kpi {background:#121B2E; border:1px solid #223152; border-radius:14px; padding:14px 18px; height:100%;}
-.kpi .label {font-size:.72rem; color:#8FA3C0; text-transform:uppercase; letter-spacing:.08em;}
-.kpi .value {font-size:2rem; font-weight:700; line-height:1.3; color:#E6EDF7;}
-.kpi .sub {font-size:.8rem; color:#8FA3C0;}
-.pill {display:inline-block; padding:0 14px; border-radius:999px; font-weight:600; font-size:1.3rem;}
-.note {background:#1A2540; border-left:4px solid #4DA3FF; border-radius:8px; padding:10px 14px;
-       color:#C9D6EC; font-size:.9rem; margin-bottom:.8rem;}
-.card {background:#121B2E; border:1px solid #223152; border-radius:14px; padding:16px 20px; height:100%;}
-.card h4 {margin:0 0 .4rem 0; font-size:1rem; color:#E6EDF7;}
-.card p {margin:0; font-size:.9rem; color:#B7C6DE;}
-.tag {font-size:.7rem; padding:1px 8px; border-radius:999px; border:1px solid #3A4C73; color:#8FA3C0;}
-.flow {display:flex; gap:10px; align-items:stretch; flex-wrap:wrap; margin:.4rem 0 1rem 0;}
-.flow .box {flex:1; min-width:170px; background:#121B2E; border:1px solid #223152; border-radius:12px; padding:12px 14px;}
-.flow .box b {color:#E6EDF7;} .flow .box span {color:#9FB2D0; font-size:.85rem;}
-.flow .arrow {align-self:center; color:#4DA3FF; font-size:1.6rem;}
-/* Main dashboard header */
+.block-container {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    max-width: 1400px;
+}
 
+/* KPI Cards */
+.kpi {
+    background: #E3EDF7;
+    border: 1px solid #C5D7E8;
+    border-bottom: 3px solid #9BB8D3;
+    border-radius: 14px;
+    padding: 14px 18px;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(30, 50, 70, 0.10);
+}
+
+.kpi .label {
+    font-size: .72rem;
+    color: #52677F;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.kpi .value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #193653;
+}
+
+.kpi .sub {
+    font-size: .8rem;
+    color: #52677F;
+}
+
+/* Pills */
+.pill {
+    display: inline-block;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+/* Note */
+.note {
+    background: #F4EBDD;
+    border-left: 4px solid #D6A96C;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #654F35;
+    font-size: .9rem;
+    margin-bottom: .8rem;
+}
+
+/* General Cards */
+.card {
+    background: #EAE5F4;
+    border: 1px solid #D5CBE8;
+    border-bottom: 3px solid #B9A9D5;
+    border-radius: 14px;
+    padding: 16px 20px;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(50, 40, 70, 0.10);
+}
+
+.card h4 {
+    margin: 0 0 .4rem 0;
+    font-size: 1rem;
+    color: #51416D;
+}
+
+.card p {
+    margin: 0;
+    font-size: .9rem;
+    color: #625875;
+}
+
+/* Tags */
+.tag {
+    font-size: .7rem;
+    padding: 1px 8px;
+    border-radius: 999px;
+    border: 1px solid #B9A9D5;
+    color: #51416D;
+}
+
+/* Flow Cards */
+.flow {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin: .4rem 0 1rem 0;
+}
+
+.flow .box {
+    flex: 1;
+    min-width: 170px;
+    background: #DFEEE9;
+    border: 1px solid #C3DDD3;
+    border-bottom: 3px solid #9FC7B7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 10px rgba(30, 60, 50, 0.10);
+}
+
+.flow .box b {
+    color: #205B4B;
+}
+
+.flow .box span {
+    color: #52766A;
+    font-size: .85rem;
+}
+
+.flow .arrow {
+    align-self: center;
+    color: #6B9C87;
+    font-size: 1.6rem;
+}
+
+/* Card hover effect */
+.kpi:hover,
+.card:hover,
+.flow .box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(30, 50, 70, 0.15);
+    transition: all 0.2s ease;
+}
+
+/* Main dashboard header */
 .hero-header {
-    background: linear-gradient(110deg, #14532D, #228B5A);
-    border: 1px solid #2F855A;
+    background: linear-gradient(110deg, #527C91, #83AFA5);
+    border: 1px solid #A5C7BD;
     border-radius: 16px;
     padding: 24px 32px;
     min-height: 155px;
@@ -104,7 +219,7 @@ st.markdown("""
 }
 
 .hero-header p {
-    color: #DCFCE7;
+    color: #F0F7F4;
     font-size: 1rem;
     margin: 10px 0 0 0;
     line-height: 1.5;
@@ -126,23 +241,7 @@ st.markdown("""
     }
 }
 
-/* Responsive header */
-@media (max-width: 768px) {
-    .hero-header {
-        padding: 24px 22px;
-        min-height: 150px;
-    }
-
-    .hero-header h1 {
-        font-size: 1.65rem;
-    }
-
-    .hero-header p {
-        font-size: 0.9rem;
-    }
-}
-
-/* Sidebar navigation font sizes */
+/* Sidebar navigation */
 .stSidebar [data-testid="stSidebarNav"] a {
     font-size: 1.08rem;
     font-weight: 600;
@@ -177,8 +276,7 @@ st.markdown("""
     margin-top: 8px;
 }
 
-
-/* Reduce page title size on all pages */
+/* Page titles */
 .stApp [data-testid="stMain"] h1 {
     font-size: 2.15rem !important;
     line-height: 1.3 !important;
