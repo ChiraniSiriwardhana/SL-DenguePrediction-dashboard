@@ -332,6 +332,55 @@ html, body {
     border-color: #52677F;
     color: #C9D6EC;
 }
+/* ===== Larger content text (headers and hero banner are not changed) ===== */
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] li,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] td,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] th {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] p {
+    font-size: 1rem !important;
+}
+[data-testid="stWidgetLabel"] p,
+[data-testid="stRadio"] label p,
+[data-testid="stCheckbox"] label p {
+    font-size: 1.05rem !important;
+}
+[data-baseweb="select"] div,
+[data-baseweb="input"] input {
+    font-size: 1.05rem !important;
+}
+button[data-baseweb="tab"] p {
+    font-size: 1.1rem !important;
+}
+.stButton button p,
+.stDownloadButton button p,
+[data-testid="stFormSubmitButton"] button p {
+    font-size: 1.05rem !important;
+}
+[data-testid="stAlert"] p {
+    font-size: 1.05rem !important;
+}
+
+/* custom cards and boxes */
+.note { font-size: 1.05rem; line-height: 1.6; }
+.card h4 { font-size: 1.15rem; }
+.card p { font-size: 1.05rem; line-height: 1.6; }
+.kpi .label { font-size: .8rem; }
+.kpi .sub { font-size: .95rem; }
+.flow .box b { font-size: 1.1rem; }
+.flow .box span { font-size: 1rem; }
+.tag { font-size: .8rem; }
+.sidebar-footer { font-size: .85rem; }
+
+/* keep the hero banner text at its original size */
+[data-testid="stMain"] .hero-header p {
+    font-size: 1.08rem !important;
+    line-height: 1.6 !important;
+}
 
 </style>
 """, unsafe_allow_html=True)
