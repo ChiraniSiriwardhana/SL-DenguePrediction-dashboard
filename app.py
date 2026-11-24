@@ -1032,7 +1032,7 @@ def page_compare():
     st.caption("Two pages, one set of trained models. This page explains what is the same, what is different, "
                "and why the Dengue Predictor asks for so few inputs.")
 
-     note("<b>Short answer:</b> Both pages use the <b>same trained models</b>. The only difference is the "
+    note("<b>Short answer:</b> Both pages use the <b>same trained models</b>. The only difference is the "
          "<b>data that goes in</b>. Most of the 24 features are not columns of the dataset. They are calculated "
          "from it (lags, rolling totals, averages). For the Latest Forecast we have the full dataset, so the "
          "notebook can easily calculate all 24 features and feed them to the models. A normal user calculating all these features by hand is not practical. So the Dengue "
