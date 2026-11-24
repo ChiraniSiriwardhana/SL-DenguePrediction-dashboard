@@ -1032,12 +1032,14 @@ def page_compare():
     st.caption("Two pages, one set of trained models. This page explains what is the same, what is different, "
                "and why the Dengue Predictor asks for so few inputs.")
 
-    note("<b>Short answer:</b> both pages use the <b>same trained models</b>. The only difference is the "
-         "<b>data that goes in</b>: the Latest Forecast uses the real, complete data of the last week in the "
-         "dataset, while the Dengue Predictor uses a few numbers typed by the user and fills the rest with averages.")
+        note("<b>Short answer:</b> Both pages use the <b>same trained models</b>. The only difference is the "
+         "<b>data that goes in</b>. Most of the 24 features are not columns of the dataset. They are calculated "
+         "from it (lags, rolling totals, averages). For the Latest Forecast we have the full dataset, so the "
+         "notebook can easily calculate all 24 features and feed them to the models. A normal user calculating all these features by hand is not practical. So the Dengue "
+         "Predictor asks for a few numbers and fills the rest with averages.")
 
     # ---------------- side-by-side
-    st.subheader("1 · The two pages side by side")
+    st.subheader("1 · What is the difference")
     side = pd.DataFrame([
         ("Where the prediction is calculated", "In the notebook (Google Colab). The app only reads the saved file "
                                                "`forecast_next_week.csv`.",
@@ -1045,10 +1047,10 @@ def page_compare():
         ("Input data", "Real data of the last week in the dataset. All 24 features are real values.",
          "Values typed by the user (5 weeks of cases, a rainfall setting). 16 of the 24 features are averages."),
         ("Districts", "All 25 at once", "One district at a time"),
-        ("Week", "Fixed: the week after the last data week (July 2024)", "Any week of the year the user chooses"),
+        ("Week", "The week after the last data week (July 2024)", "Any week of the year the user chooses"),
         ("Models", "Naive, ARIMA, Random Forest, XGBoost, LightGBM, CatBoost, Stacking, Hybrid",
          "Random Forest, Stacking, Linear Regression (ARIMA and Hybrid need the full weekly history)"),
-        ("Can the user change the inputs?", "No", "Yes (what-if)"),
+        ("Can the user change the inputs?", "No", "Yes "),
         ("Accuracy", "Best available: every input is real", "Lower: many inputs are averages (see the backtest on that page)"),
         ("Purpose", "Show the forecast for the latest data", "Let users try scenarios"),
     ], columns=["", "Latest Forecast", "Dengue Predictor"])
@@ -1089,12 +1091,11 @@ def page_compare():
              "trained to predict 2, 3 or 4 weeks ahead.", "Training")
     with c2:
         card("The inputs for later weeks do not exist yet",
-             "The models rely mostly on recent cases (this week, last week, the average of the last 4 weeks). "
+             "The models rely mostly on recent cases (this week, last week, the average of the last 4 weeks because of the life cycle of a mosquito). "
              "For a forecast several weeks after the data ends, those recent weeks have not happened, so their "
              "values are unknown. Using predicted values as inputs is possible but errors add up each step, and "
              "it was not trained or tested in this study.", "Limitation")
-    st.caption("To forecast further ahead you would add the newest real weekly data and re-run the forecast, or "
-               "train separate models whose target is 2, 3 or 4 weeks ahead. This was left out of the project.")
+   
 
     # ---------------- dataset columns
     st.subheader("4 · What is in the dataset")
@@ -1184,14 +1185,9 @@ def page_compare():
     with c2:
         card("A simplified tool for this assignment",
              "For this assignment the Dengue Predictor therefore asks for only a few inputs and fills the rest with "
-             "district-week averages. It is a what-if tool, not a validated forecast. The cost in accuracy is "
-             "measured by the backtest on the Dengue Predictor page. The Latest Forecast page, which uses all "
+             "district-week averages. The Latest Forecast page, which uses all "
              "24 real features, is the full-accuracy result.", "Design choice")
-    st.caption("The district-week averages used by the live Dengue Predictor are calculated from all years of the "
-               "dataset (2007 to July 2024). The accuracy backtest on that page used averages from the training "
-               "years only (before 2021), so no test data leaked into the backtest.")
-    st.caption("A future version could add an advanced mode with an input box for each of the 24 features, or read the "
-               "weekly data automatically from a surveillance database.")
+    
 
 
 
