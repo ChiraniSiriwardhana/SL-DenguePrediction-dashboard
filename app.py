@@ -1,7 +1,7 @@
 """Sri Lanka weekly dengue forecasting dashboard (Streamlit, dark theme).
 
 Pages (sidebar sections)
-  Forecast            Latest Forecast (forecast_next_week.csv, all districts) · Dengue Predictor (what-if tool)
+  Forecast            Latest Forecast (forecast_next_week.csv, all districts) · Dengue Predictor (what-if tool) · Latest vs Predictor
   Data                Dataset overview
   Models              All models · Feature importance · Hybrid model · RF vs XGBoost · Best model & why
   Research & info     Research · About
@@ -699,6 +699,7 @@ def feature_models(feats, district, want):
 
 
 # ------------------------------------------------------------------ "Dengue Predictor": district-week profile
+
 SRC_INPUT = "✍️ You entered"
 SRC_CALC = "🧮 Calculated from your cases"
 SRC_RAIN = "🌧️ District-week average × rainfall setting"
@@ -1025,6 +1026,173 @@ def page_whatif():
     with r3:
         card("Week numbers wrap around", "Weeks before week 1 count back from week 52, and week 53 uses week 52's "
              "usual values. This is an approximation.", "Approximation")
+ #================================================================== PAGE: LATEST VS PREDICTOR
+def page_compare():
+    st.title("Latest Forecast vs Dengue Predictor")
+    st.caption("Two pages, one set of trained models. This page explains what is the same, what is different, "
+               "and why the Dengue Predictor asks for so few inputs.")
+
+    note("<b>Short answer:</b> both pages use the <b>same trained models</b>. The only difference is the "
+         "<b>data that goes in</b>: the Latest Forecast uses the real, complete data of the last week in the "
+         "dataset, while the Dengue Predictor uses a few numbers typed by the user and fills the rest with averages.")
+
+    # ---------------- side-by-side
+    st.subheader("1 · The two pages side by side")
+    side = pd.DataFrame([
+        ("Where the prediction is calculated", "In the notebook (Google Colab). The app only reads the saved file "
+                                               "`forecast_next_week.csv`.",
+         "Live in the app. The saved model files are loaded and run when you press the button."),
+        ("Input data", "Real data of the last week in the dataset. All 24 features are real values.",
+         "Values typed by the user (5 weeks of cases, a rainfall setting). 16 of the 24 features are averages."),
+        ("Districts", "All 25 at once", "One district at a time"),
+        ("Week", "Fixed: the week after the last data week (July 2024)", "Any week of the year the user chooses"),
+        ("Models", "Naive, ARIMA, Random Forest, XGBoost, LightGBM, CatBoost, Stacking, Hybrid",
+         "Random Forest, Stacking, Linear Regression (ARIMA and Hybrid need the full weekly history)"),
+        ("Can the user change the inputs?", "No", "Yes (what-if)"),
+        ("Accuracy", "Best available: every input is real", "Lower: many inputs are averages (see the backtest on that page)"),
+        ("Purpose", "Show the forecast for the latest data", "Let users try scenarios"),
+    ], columns=["", "Latest Forecast", "Dengue Predictor"])
+    st.dataframe(side, hide_index=True, width="stretch")
+
+    # ---------------- flows
+    st.subheader("2 · How each page gets its number")
+    st.markdown("**Latest Forecast**: the prediction is made in the notebook and imported into the dashboard.")
+    st.markdown(
+        '<div class="flow">'
+        '<div class="box"><b>1 · Notebook</b><br><span>Models are trained on data up to 2020, tuned on 2021–2022 '
+        'and tested on 2023 to July 2024.</span></div><div class="arrow">➜</div>'
+        '<div class="box"><b>2 · Last data week</b><br><span>The 24 real features are built for the last week '
+        'in the dataset, for every district.</span></div><div class="arrow">➜</div>'
+        '<div class="box"><b>3 · Predict</b><br><span>The tuned models predict the following week. No retraining '
+        'happens here.</span></div><div class="arrow">➜</div>'
+        '<div class="box"><b>4 · CSV → dashboard</b><br><span>Results are saved as <code>forecast_next_week.csv</code> '
+        'and the app only displays them.</span></div></div>', unsafe_allow_html=True)
+    st.markdown("**Dengue Predictor**: the same models, but the app builds the input row itself.")
+    st.markdown(
+        '<div class="flow">'
+        '<div class="box"><b>1 · User input</b><br><span>District, week of the year, cases this week and the 4 '
+        'weeks before, rainfall setting.</span></div><div class="arrow">➜</div>'
+        '<div class="box"><b>2 · Fill the gaps</b><br><span>The other features come from district-week averages '
+        '(<code>district_week_profile.csv</code>).</span></div><div class="arrow">➜</div>'
+        '<div class="box"><b>3 · 24 features</b><br><span>One complete row of 24 numbers is built.</span></div>'
+        '<div class="arrow">➜</div>'
+        '<div class="box"><b>4 · Saved model</b><br><span>The model file runs live in the app and returns the '
+        'expected cases for the next week.</span></div></div>', unsafe_allow_html=True)
+
+    # ---------------- one week ahead
+    st.subheader("3 · Why only one week ahead?")
+    c1, c2 = st.columns(2)
+    with c1:
+        card("The models learned one task",
+             "Every model was trained to answer: <i>given the cases and weather up to this week, how many cases "
+             "will there be next week?</i> The target in the notebook is next week's cases. They were never "
+             "trained to predict 2, 3 or 4 weeks ahead.", "Training")
+    with c2:
+        card("The inputs for later weeks do not exist yet",
+             "The models rely mostly on recent cases (this week, last week, the average of the last 4 weeks). "
+             "For a forecast several weeks after the data ends, those recent weeks have not happened, so their "
+             "values are unknown. Using predicted values as inputs is possible but errors add up each step, and "
+             "it was not trained or tested in this study.", "Limitation")
+    st.caption("To forecast further ahead you would add the newest real weekly data and re-run the forecast, or "
+               "train separate models whose target is 2, 3 or 4 weeks ahead. This was left out of the project.")
+
+    # ---------------- dataset columns
+    st.subheader("4 · What is in the dataset")
+    raw = load_raw()
+    st.markdown(f"The dataset has **{raw.shape[1]} columns** and **{len(raw):,} rows** "
+                f"(25 districts × {raw.groupby('District').size().iloc[0]} weeks). "
+                "Only a few columns go into the models directly.")
+    cols = pd.DataFrame([
+        ("District", "Name of the district", "Used (becomes `District_code`)"),
+        ("Number_of_Cases", "Reported dengue cases in the week", "Used (also the target, shifted by one week)"),
+        ("Week_Start_Date, Week_End_Date", "Start and end date of the week", "Used only to order and split the data in time"),
+        ("Week", "Week number of the year", "Used (becomes `Week_sin` and `Week_cos`)"),
+        ("Avg Max Temp (°C)", "Average maximum temperature", "Used"),
+        ("Avg Min Temp (°C)", "Average minimum temperature", "Used"),
+        ("Total Precipitation (mm)", "Total rainfall in the week", "Used"),
+        ("Avg Wind Speed (km/h)", "Average wind speed", "Used"),
+        ("Total Rain (mm)", "Identical to Total Precipitation", "Removed (duplicate)"),
+        ("Avg Sunrise Time, Avg Sunset Time", "Sunrise and sunset", "Removed in cleaning"),
+        ("Avg Apparent Max / Min Temp (°C)", "Apparent temperatures", "Not used (overlap with real temperatures)"),
+        ("Max Wind Gusts (km/h)", "Strongest wind gusts", "Not used (overlaps with wind speed)"),
+        ("Avg Daylight Duration (hours)", "Length of daylight", "Not used (almost purely seasonal)"),
+        ("Weather Code, Month, Year", "Weather category, month, year", "Not used"),
+    ], columns=["Dataset column", "Meaning", "Role in the models"])
+    st.dataframe(cols, hide_index=True, width="stretch")
+
+    # ---------------- 24 features
+    st.subheader("5 · The 24 features the models use")
+    note("<b>Important:</b> most of the 24 features are <b>not columns of the dataset</b>. They are "
+         "<b>calculated</b> in the notebook from the dataset: lags (values from earlier weeks), rolling totals and "
+         "averages, and a circular version of the week number. All calculations are done separately for each "
+         "district and use only past weeks.")
+    feats = pd.DataFrame([
+        ("Number_of_Cases", "Case history", "Cases this week", "Taken directly from the dataset", "You enter"),
+        ("cases_lag1", "Case history", "Cases 1 week ago", "Number_of_Cases moved back 1 week", "You enter"),
+        ("cases_lag2", "Case history", "Cases 2 weeks ago", "Number_of_Cases moved back 2 weeks", "You enter"),
+        ("cases_lag4", "Case history", "Cases 4 weeks ago", "Number_of_Cases moved back 4 weeks", "You enter"),
+        ("cases_lag8", "Case history", "Cases 8 weeks ago", "Number_of_Cases moved back 8 weeks", "Average (district-week median)"),
+        ("cases_lag12", "Case history", "Cases 12 weeks ago", "Number_of_Cases moved back 12 weeks", "Average (district-week median)"),
+        ("cases_roll4_mean", "Case history", "Average cases of the 4 weeks before this week",
+         "Mean of the cases 1, 2, 3 and 4 weeks ago (this week not included)", "Calculated from your cases"),
+        ("Total Precipitation (mm)", "Current weather", "Rainfall this week", "Taken directly from the dataset",
+         "Average × rainfall setting"),
+        ("Avg Max Temp (°C)", "Current weather", "Max temperature this week", "Taken directly from the dataset", "Average"),
+        ("Avg Min Temp (°C)", "Current weather", "Min temperature this week", "Taken directly from the dataset", "Average"),
+        ("Avg Wind Speed (km/h)", "Current weather", "Wind speed this week", "Taken directly from the dataset", "Average"),
+        ("rain_lag2", "Rainfall history", "Rainfall 2 weeks ago", "Rainfall moved back 2 weeks", "Average × rainfall setting"),
+        ("rain_lag4", "Rainfall history", "Rainfall 4 weeks ago", "Rainfall moved back 4 weeks", "Average × rainfall setting"),
+        ("rain_lag6", "Rainfall history", "Rainfall 6 weeks ago", "Rainfall moved back 6 weeks", "Average × rainfall setting"),
+        ("rain_lag8", "Rainfall history", "Rainfall 8 weeks ago", "Rainfall moved back 8 weeks", "Average × rainfall setting"),
+        ("rain_lag10", "Rainfall history", "Rainfall 10 weeks ago", "Rainfall moved back 10 weeks", "Average × rainfall setting"),
+        ("rain_sum4", "Rainfall history", "Total rain of the previous 4 weeks", "Sum of rainfall 1 to 4 weeks ago (this week not included)",
+         "Average × rainfall setting"),
+        ("rain_sum8", "Rainfall history", "Total rain of the previous 8 weeks", "Sum of rainfall 1 to 8 weeks ago (this week not included)",
+         "Average × rainfall setting"),
+        ("rain_sum12", "Rainfall history", "Total rain of the previous 12 weeks", "Sum of rainfall 1 to 12 weeks ago (this week not included)",
+         "Average × rainfall setting"),
+        ("maxtemp_lag4", "Temperature history", "Max temperature 4 weeks ago", "Max temperature moved back 4 weeks", "Average"),
+        ("maxtemp_lag8", "Temperature history", "Max temperature 8 weeks ago", "Max temperature moved back 8 weeks", "Average"),
+        ("Week_sin", "Season", "Week of the year as a circle (sine part)", "sin(2π × Week / 52)", "Calculated from the week"),
+        ("Week_cos", "Season", "Week of the year as a circle (cosine part)", "cos(2π × Week / 52)", "Calculated from the week"),
+        ("District_code", "District", "Number that stands for the district", "Districts in alphabetical order, numbered from 0",
+         "Calculated from the district"),
+    ], columns=["Feature", "Group", "Meaning", "How it is calculated", "In the Dengue Predictor"])
+    st.dataframe(feats, hide_index=True, width="stretch", height=600)
+    st.caption("The Hybrid ARIMA + RF model adds one more input, the ARIMA forecast (`arima_pred`), which needs "
+               "the full weekly history of the district. The Naive model simply repeats this week's cases.")
+
+    k1, k2, k3, k4 = st.columns(4)
+    with k1:
+        kpi("Typed by the user", "4", "cases now, 1, 2 and 4 weeks ago")
+    with k2:
+        kpi("Calculated from the user's cases", "1", "average of the previous 4 weeks")
+    with k3:
+        kpi("Calculated from district and week", "3", "Week_sin, Week_cos, District_code")
+    with k4:
+        kpi("Filled with averages", "16", "weather and older case lags")
+
+    # ---------------- why averages
+    st.subheader("6 · Why the Dengue Predictor uses averages")
+    c1, c2 = st.columns(2)
+    with c1:
+        card("Asking for all 24 values is not practical",
+             "Most features are calculated from weeks of history: rainfall 2, 4, 6, 8 and 10 weeks ago, 4, 8 and "
+             "12-week rainfall totals, temperatures 4 and 8 weeks ago, and so on. A user would have to look up "
+             "and calculate all of them by hand, which most people cannot do. Recent case counts are what a user "
+             "is most likely to know.", "Usability")
+    with c2:
+        card("A simplified tool for this assignment",
+             "For this assignment the Dengue Predictor therefore asks for only a few inputs and fills the rest with "
+             "district-week averages. It is a what-if tool, not a validated forecast. The cost in accuracy is "
+             "measured by the backtest on the Dengue Predictor page. The Latest Forecast page, which uses all "
+             "24 real features, is the full-accuracy result.", "Design choice")
+    st.caption("The district-week averages used by the live Dengue Predictor are calculated from all years of the "
+               "dataset (2007 to July 2024). The accuracy backtest on that page used averages from the training "
+               "years only (before 2021), so no test data leaked into the backtest.")
+    st.caption("A future version could add an advanced mode with an input box for each of the 24 features, or read the "
+               "weekly data automatically from a surveillance database.")
+
 
 
 # ================================================================== PAGE: DATASET
@@ -1720,6 +1888,7 @@ NAV = {
     "Forecast": [
         st.Page(page_latest_forecast, title="Latest Forecast", icon="🔮", url_path="latest-forecast", default=True),
         st.Page(page_whatif, title="Dengue Predictor", icon="🧪", url_path="dengue-predictor"),
+        st.Page(page_compare, title="Latest vs Predictor", icon="🆚", url_path="latest-vs-predictor"),
     ],
     "Data": [
         st.Page(page_dataset, title="Dataset", icon="📊", url_path="dataset"),
