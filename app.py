@@ -13,6 +13,8 @@ Files (repository root, or in a folder called data/):
              plus the model files of the stacking members that have a weight above 0 (e.g. catboost_model.cbm)
   optional : feature_importance.csv, training_time.csv
 """
+import utils.clients
+import utils.http_session
 import json
 from pathlib import Path
 
