@@ -130,3 +130,7 @@ Fork the repo, go to [share.streamlit.io](https://share.streamlit.io), choose **
 ## Acknowledgements
 
 Data: [rajaththomson](https://github.com/rajaththomson/sri-lanka-dengue-fever-analysis). District boundaries: [Natural Earth](https://www.naturalearthdata.com/) (public domain). Tools: Google Colab, scikit-learn, XGBoost, LightGBM, CatBoost, statsmodels, Streamlit, Plotly.
+
+## AI Assistance
+
+Claude (Anthropic) supported code generation and explanations. Dataset selection, model training, deployment and review of results by: Siriwardhana C.R.H.P.E.R.
